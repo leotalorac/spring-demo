@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -19,12 +21,15 @@ public class DemoApplicationService {
         String[] genre = {"horror","comedy","drama"};
         int index =0;
         IntStream.range(0,100).forEach(i->{
-            Book book = new Book(i,"Book name",genre[i%genre.length]);
+            Book book = new Book(i,"Book name " + i,genre[i%genre.length]);
             books.add(book);
         });
     }
 
     public List<Book> getBooks() {
         return books;
+    }
+    public List<Book> getGenreBooks(Optional<String> genre){
+        return this.books.stream().filter(book-> !genre.isPresent() || book.getGenre().equals(genre.get())).collect(Collectors.toList());
     }
 }

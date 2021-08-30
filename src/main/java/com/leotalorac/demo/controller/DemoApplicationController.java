@@ -4,10 +4,13 @@ import com.leotalorac.demo.model.Book;
 import com.leotalorac.demo.service.DemoApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class DemoApplicationController {
@@ -38,10 +41,18 @@ public class DemoApplicationController {
             return "Ash :(";
         }
     }
-
+//  call a controller
     @GetMapping("/books")
     public List<Book> getallBooks(){
-//        bookService = new DemoApplicationService();
         return  this.bookService.getBooks();
     }
+
+//    Using optional to null objects
+//    get with more logic
+    @GetMapping("/books-genre")
+    public List<Book> filterBooks(@RequestParam(required = false) Optional<String> genre){
+        return this.bookService.getGenreBooks(genre);
+    }
+
+
 }
