@@ -3,10 +3,7 @@ package com.leotalorac.demo.controller;
 import com.leotalorac.demo.model.Book;
 import com.leotalorac.demo.service.DemoApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,5 +51,9 @@ public class DemoApplicationController {
         return this.bookService.getGenreBooks(genre);
     }
 
+    @GetMapping("/book/{id}")
+    public Book getBook(@PathVariable("id") Integer id){
+        return this.bookService.getBook(id);
+    }
 
 }
