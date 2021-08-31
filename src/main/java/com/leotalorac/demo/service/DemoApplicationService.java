@@ -32,7 +32,9 @@ public class DemoApplicationService {
     public List<Book> getGenreBooks(Optional<String> genre){
         return this.books.stream().filter(book-> !genre.isPresent() || book.getGenre().equals(genre.get())).collect(Collectors.toList());
     }
-    public Book getBook(Integer id){
-        return this.books.stream().filter(book->book.getId()==id).findFirst().get();
+    public Optional<Book> getBook(Integer id){
+        return this.books.stream()
+                .filter(book->book.getId()==id)
+                .findFirst();
     }
 }
