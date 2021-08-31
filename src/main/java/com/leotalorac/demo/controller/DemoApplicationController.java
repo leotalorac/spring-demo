@@ -23,38 +23,41 @@ public class DemoApplicationController {
     }
     //    Simple get request
     @GetMapping("/health-check")
-    public String healthCheck(){
-        return "OK";
+    public ResponseEntity<String> healthCheck(){
+        return ResponseEntity.ok("OK");
     }
     //    Get request with params
     @GetMapping("/greet")
-    public String greet(@RequestParam(required = false) String language){
+    public ResponseEntity<String> greet(@RequestParam(required = false) String language){
+        String greet = "No idea";
         if(language!=null) {
             switch (language) {
                 case "es":
-                    return "Hola";
+                     greet ="Hola";
+                     break;
                 case "en":
-                    return "Hello";
+                    greet="Hello";
+                    break;
                 case "de":
-                    return "Hallo";
-                default:
-                    return "No idea";
+                    greet= "Hallo";
+                    break;
             }
+            return ResponseEntity.ok(greet);
         }else{
-            return "Ash :(";
+            return ResponseEntity.badRequest().build();
         }
     }
     //  call a controller
     @GetMapping("/books")
-    public List<Book> getallBooks(){
-        return  this.bookService.getBooks();
+    public ResponseEntity<List<Book>> getallBooks(){
+        return  ResponseEntity.ok(this.bookService.getBooks());
     }
 
     //    Using optional to null objects
     //    get with more logic
     @GetMapping("/books-genre")
-    public List<Book> filterBooks(@RequestParam(required = false) Optional<String> genre){
-        return this.bookService.getGenreBooks(genre);
+    public ResponseEntity<List<Book>> filterBooks(@RequestParam(required = false) Optional<String> genre){
+        return ResponseEntity.ok(this.bookService.getGenreBooks(genre));
     }
 
     @GetMapping("/book/{id}")
